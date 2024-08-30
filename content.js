@@ -20,53 +20,36 @@ chrome.runtime.onMessage.addListener(function (message, sender, callback) {
 });
 
 function onClick() {
-  let name = null;
-  let input = null;
-  let output = null;
-  let examples = [];
+  var name = null;
+  var input = null;
+  var output = null;
+  var io = [];
 
-  const sections = document.querySelectorAll("#task-statement section");
-  for (const section of sections) {
-    let h3 = section.querySelector("h3");
-    let pre = section.querySelector("pre");
+  var sample_tests = document.querySelectorAll("#pageContent > div.problemindexholder > div.ttypography > div > div.sample-tests > div.sample-test > div");
+  var num = 0;
 
-    // SECTION の中に H3 タグがある場合(ABC033_D)と、
-    // SECTION の直前に H3 タグがある場合(ARC014_A)がある
-    if (h3 == null) {
-      let prev = section.previousElementSibling;
-      if (prev != null > 0 && prev.tagName == "H3") {
-        h3 = prev;
-      }
+  for (var i = 0; i < sample_tests.length; i++) {
+    var children = sample_tests[i].children;
+    var header = children[0].firstChild.textContent.trim();
+    var data = children[1].innerText.trim();
+
+
+
+    if (header.indexOf("Input") == 0 || header.indexOf("Входные данные") == 0) {
+      // Input0
+      name = header.replace(/\s+/g, "_") + num;
+      input = data;
+      num += 1;
+    } else if (header.indexOf("Output") == 0 || header.indexOf("Выходные данные") == 0) {
+      output = data;
     }
 
-    if (h3 != null && pre != null && (h3.offsetWidth || h3.offsetHeight)) {
-      let header = h3.firstChild.textContent.trim();
-      let example = pre.textContent;
-
-      // シンタックスハイライトされている場合、リスト形式に
-      // なっているので、一行ずつ取り出す (ABC007_3、など)
-      let pretty = pre.getElementsByTagName("li");
-      if (pretty.length > 0) {
-        example = "";
-        for (let j = 0; j < pretty.length; j++) {
-          example += pretty[j].textContent;
-          example += "\n";
-        }
-      }
-
-      if (header.indexOf("入力例") == 0 || header.indexOf("Sample Input") == 0) {
-        name = header.replace("入力例", "sample").replace(/\s+/g, "");
-        input = example.trim();
-      } else if (header.indexOf("出力例") == 0 || header.indexOf("Sample Output") == 0) {
-        output = example.trim();
-      }
-    }
 
     if (name != null && input != null && output != null) {
-      examples.push({ name: name, input: input, output: output });
+      io.push({ name: name, input: input, output: output });
       name = input = output = null;
     }
   }
 
-  return examples;
+  return io;
 }

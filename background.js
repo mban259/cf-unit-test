@@ -36,7 +36,7 @@ function onUpdated(tabId, changeInfo, tab) {
         return;
     }
 
-    if (/https?:\/\/atcoder.jp\/contests\/[^\/]+\/tasks\/[^\/]+/.test(changeInfo.url)) {
+    if (/^https:\/\/codeforces\.com\/(contest\/\d+\/problem\/\w+|problemset\/problem\/\d+\/\d+|gym\/\d+\/problem\/\w+)$/.test(changeInfo.url)) {
         chrome.action.enable(tabId);
     } else {
         chrome.action.disable();

@@ -6,7 +6,7 @@
   "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
-      "id": "@acunittest"
+      "id": "@cfunittest"
     }
   },
   "permissions": [

@@ -1,5 +1,5 @@
 {
-  "name": "AtCoder Unit Test",
+  "name": "Codeforces Unit Test",
   "version": "3.1.0",
   "manifest_version": 3,
   "description": "__MSG_extDescription__",
@@ -14,7 +14,9 @@
     "storage"
   ],
   "host_permissions": [
-    "*://atcoder.jp/contests/*/tasks/*"
+    "https://codeforces.com/contest/*/problem/*",
+    "https://codeforces.com/problemset/problem/*",
+    "https://codeforces.com/gym/*/problem/*"
   ],
   "icons": {
     "48": "icon.png"
@@ -28,7 +30,9 @@
   "content_scripts": [
     {
       "matches": [
-        "*://atcoder.jp/contests/*/tasks/*"
+        "https://codeforces.com/contest/*/problem/*",
+        "https://codeforces.com/problemset/problem/*",
+        "https://codeforces.com/gym/*/problem/*"
       ],
       "js": [
         "content.js"
